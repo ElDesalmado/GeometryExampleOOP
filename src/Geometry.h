@@ -57,9 +57,7 @@ class GeomFormVisual : public IGeomForm,
 
 public:
 
-    GeomFormVisual(const Point& pos)
-        : GeomPosition(pos)
-    {}
+	GeomFormVisual(const Point& pos);
 
     // inherited from IVisual
     size_t LineThickness() const override;
@@ -74,6 +72,7 @@ public:
     void SetPosition(Point pos) override;
     void Transpose(float dX, float dY) override;
 
+	virtual ~GeomFormVisual() = default;
 
 };
 
@@ -161,4 +160,33 @@ public:
 
     // inherited from IDrawable
     virtual void Draw(IDrawer &drawer) const override;
+};
+
+// all angles 45 deg for simplicity
+class Triangle : public GeomFormVisual
+{
+	PropertyGeometric<IPropertyGeometric::radius> length_{ 20 };
+
+public:
+	Triangle(const Point& pos);
+
+	// inherited from IGeomForm
+	Type GeomType() const override;
+	Rect BoundingRect() const override;
+	bool PropertySupported(IPropertyGeometric::Type) const override;
+	std::set<IPropertyGeometric::Type> SupportedProps() const override;
+	void Scale(float times) override;
+
+	// inherited from IPropertyHolder
+	size_t CountProps(IProperty::Type type) const override;
+	std::optional<RefIProperty> GetProperty(IProperty::Type type,
+		size_t indx) override;
+	std::optional<CRefIProperty> GetProperty(IProperty::Type type,
+		size_t indx) const override;
+
+	// the caller is responsible to check whether the type is valid
+	void SetProperty(const IProperty& prop) override;
+
+	// inherited from IDrawable
+	virtual void Draw(IDrawer &drawer) const override;
 };

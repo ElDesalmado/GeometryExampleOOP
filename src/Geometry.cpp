@@ -21,6 +21,10 @@ void Visual::SetColor(ColorRGB color)
 }
 
 
+GeomFormVisual::GeomFormVisual(const Point & pos)
+	: GeomPosition(pos)
+{}
+
 size_t GeomFormVisual::LineThickness() const
 {
     return visuals_.LineThickness();
@@ -67,10 +71,9 @@ std::unique_ptr<IGeomForm> IGeomForm::Create(IGeomForm::Type type,
         return std::make_unique<Square>(pos);
     case gm::IGeomForm::circle:
         return std::make_unique<Circle>(pos);
-        /*
     case gm::IGeomForm::triangle:
-        break;*/
-    default:
+		return std::make_unique<Triangle>(pos);
+	default:
         break;
     }
 

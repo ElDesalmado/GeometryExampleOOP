@@ -19,6 +19,7 @@ int main(int argc, const char *argv)
 {
     DummyDrawer drawer;
 
+	// using factory to create a geometry form. Ownership is transfered to the caller
     std::unique_ptr<gm::IGeomForm> rectTest =
         gm::IGeomForm::Create(gm::IGeomForm::rectangle, gm::Point(10.0f, 15.0f));
 
@@ -35,6 +36,7 @@ int main(int argc, const char *argv)
     rectTest->SetLineThickness(3);
     rectTest->SetColor(gm::ColorRGB(3.0f, 2.0f, 14.0f));
 
+	// example how to modify supported properties
     try
     {
         rectTest->SetProperty(gm::PropertyGeometric<gm::IPropertyGeometric::height>(22));
@@ -46,7 +48,7 @@ int main(int argc, const char *argv)
         return -1;
     }
 
-    // this must throw
+    // this must throw: trying to set non-supported property
     try
     {
         rectTest->SetProperty(gm::PropertyGeometric<gm::IPropertyGeometric::length>(10));

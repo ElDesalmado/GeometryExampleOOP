@@ -10,7 +10,7 @@ Circle::Circle(const Point & pos)
 
 IGeomForm::Type Circle::GeomType() const
 {
-    return IGeomForm::square;
+    return IGeomForm::circle;
 }
 
 Rect Circle::BoundingRect() const

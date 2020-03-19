@@ -95,7 +95,7 @@ namespace gm
 
         virtual ~IGeomForm() = default;
 
-        // factory method, transfers ownership
+        // factory method, transfers ownership. Nullptr if type is not supported
         static std::unique_ptr<IGeomForm> Create(IGeomForm::Type type, 
             const Point& pos = Point(0.0f, 0.0f));
     };
